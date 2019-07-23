@@ -19,12 +19,14 @@ from trains.train_factory import train_factory
 def main(opt):
   torch.manual_seed(opt.seed)
   torch.backends.cudnn.benchmark = not opt.not_cuda_benchmark and not opt.test
-  # Dataset = get_dataset(opt.dataset, opt.task)
-  Dataset = get_dataset('bbox_data', 'bbox_sample')
-  opt = opts().update_dataset_info_and_set_heads(opt, Dataset)
-  print(opt)
+  
+  class_file_path = '../data_labels/bbox/coco/classes.txt'
+  train_data_path = '../data_labels/bbox/coco_001/test.txt'
 
-  logger = Logger(opt)
+  Dataset = get_dataset('bbox_dataset', 'bbox_sample')
+  opt = opts().update_dataset_info_and_set_heads(opt, Dataset)
+
+  # logger = Logger(opt)
 
   os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
   opt.device = torch.device('cuda' if opt.gpus[0] >= 0 else 'cpu')
@@ -43,8 +45,8 @@ def main(opt):
 
   print('Setting up data...')
   val_loader = torch.utils.data.DataLoader(
-      Dataset(opt, 'val'), 
-      batch_size=1, 
+      Dataset(opt, class_file_path, train_data_path),
+      batch_size=1,
       shuffle=False,
       num_workers=1,
       pin_memory=True
@@ -56,7 +58,7 @@ def main(opt):
     return
 
   train_loader = torch.utils.data.DataLoader(
-      Dataset(opt, 'train'), 
+      Dataset(opt, class_file_path, train_data_path),
       batch_size=opt.batch_size, 
       shuffle=True,
       num_workers=opt.num_workers,
