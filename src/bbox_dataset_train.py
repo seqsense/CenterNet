@@ -22,6 +22,7 @@ def main(opt):
   
   class_file_path = '../data_labels/bbox/coco/classes.txt'
   train_data_path = '../data_labels/bbox/coco_001/test.txt'
+  image_dir_path = '../'
 
   Dataset = get_dataset('bbox_dataset', 'bbox_sample')
   opt = opts().update_dataset_info_and_set_heads(opt, Dataset)
@@ -45,7 +46,7 @@ def main(opt):
 
   print('Setting up data...')
   val_loader = torch.utils.data.DataLoader(
-      Dataset(opt, class_file_path, train_data_path),
+      Dataset(opt, class_file_path, train_data_path, image_dir_path),
       batch_size=1,
       shuffle=False,
       num_workers=1,
@@ -58,7 +59,7 @@ def main(opt):
     return
 
   train_loader = torch.utils.data.DataLoader(
-      Dataset(opt, class_file_path, train_data_path),
+      Dataset(opt, class_file_path, train_data_path, image_dir_path),
       batch_size=opt.batch_size, 
       shuffle=True,
       num_workers=opt.num_workers,

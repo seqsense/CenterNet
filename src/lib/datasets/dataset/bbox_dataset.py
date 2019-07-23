@@ -18,11 +18,11 @@ class BBOX_DATA(data.Dataset):
   std  = np.array([0.28863828, 0.27408164, 0.27809835],
                    dtype=np.float32).reshape(1, 1, 3)
 
-  def __init__(self, opt, classes_path, data_label_path):
+  def __init__(self, opt, classes_path, data_label_path, image_dir_path):
     # super(COCO, self).__init__()
 
     self.max_objs = 128
-    
+    self.image_dir = image_dir_path
     self.class_name = []
     with open(classes_path, 'r') as f:
       class_name = f.readline()
