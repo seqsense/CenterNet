@@ -67,9 +67,11 @@ class BBOX_DATA(data.Dataset):
         data_list = data_str.strip().split()
         data_dict = {'file_name': data_list[0], 'objects':[]}
         for data in data_list[1:]:
-          object_dict = {'bbox': data[:4], 'class_id': data[4]}
+          data = list(map(int, data.split(',')))
+          object_dict = {'bbox': np.array(data[:4]), 'class_id': data[4]}
           data_dict['objects'].append(object_dict)
         self.image_datas.append(data_dict)
+        data_str = f.readline()
 
     # self.image_dir = os.path.join() os.path.dirname(self.image_datas[0]['file_name'])
     self.num_samples = len(self.image_datas)
