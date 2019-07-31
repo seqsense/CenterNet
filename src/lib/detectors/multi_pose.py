@@ -11,9 +11,9 @@ import torch
 from external.nms import soft_nms_39
 from models.decode import multi_pose_decode
 from models.utils import flip_tensor, flip_lr_off, flip_lr
-from utils.image import get_affine_transform
-from utils.post_process import multi_pose_post_process
-from utils.debugger import Debugger
+from centernet_utils.image import get_affine_transform
+from centernet_utils.post_process import multi_pose_post_process
+from centernet_utils.debugger import Debugger
 
 from .base_detector import BaseDetector
 
